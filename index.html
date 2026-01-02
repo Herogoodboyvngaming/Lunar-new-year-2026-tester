@@ -41,13 +41,16 @@
         .flower { position: absolute; font-size: 28px; pointer-events: none; user-select: none; animation: flowerAnim 3s ease-out forwards; will-change: transform, opacity; }
         @keyframes flowerAnim { 0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); } 100% { opacity: 0; transform: translateY(-80px) rotate(360deg) scale(0.5); } }
 
-        /* Pháo hoa nổ trực tiếp sau bảng (không bay lên) - đẹp và mượt */
+        /* Pháo hoa nổ trực tiếp sau bảng, KHÔNG di chuyển bảng */
         .firework {
-            position: absolute;
+            position: fixed; /* Fixed để không ảnh hưởng layout */
             pointer-events: none;
             width: 10px; height: 10px;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
             animation: explode 1.6s ease-out forwards;
             will-change: transform, opacity;
+            z-index: 5; /* Sau container (z-index 10) để nổ phía sau bảng */
         }
         .particle {
             position: absolute;
@@ -141,8 +144,9 @@
                 setTimeout(() => {
                     const firework = document.createElement('div');
                     firework.className = 'firework';
+                    // Random vị trí trên toàn màn hình
                     firework.style.left = `${Math.random() * 100}vw`;
-                    firework.style.top = `${Math.random() * 80 + 10}vh`; // Nổ sau bảng, vị trí random
+                    firework.style.top = `${Math.random() * 100}vh`;
 
                     const color = colors[Math.floor(Math.random() * colors.length)];
 
